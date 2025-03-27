@@ -1,0 +1,9 @@
+@Lab1_HostAddress = http://localhost:5247
+
+GET {{Lab1_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{Lab1_HostAddress}}/api/student/
+accept: application/json
