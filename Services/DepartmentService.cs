@@ -140,7 +140,7 @@ public class DepartmentService
         return departmentDto;
     }
     
-    public bool AddDepartment(Department department)
+    public int AddDepartment(Department department)
     {
         return repository.Add(department);
     }

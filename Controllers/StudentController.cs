@@ -1,5 +1,6 @@
 ﻿using Lab1.Models;
 using Lab1.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,12 +20,14 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetAll()
     {
         return Ok(this.studentService.GetStudents());
     }
 
     [HttpGet("{id:int}")]
+    [Authorize(Roles = "Student")]
     public IActionResult GetById(int id)
     {
         var student = this.studentService.GetStudentById(id);
@@ -38,7 +41,8 @@ public class StudentController : ControllerBase
     }
     
     [HttpGet("{name:alpha}")]
-    public IActionResult GetById(string name)
+    [Authorize(Roles = "Student")]
+    public IActionResult GetByName(string name)
     {
         var students = this.studentService.GetStudentByName(name);
         
@@ -46,9 +50,10 @@ public class StudentController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public IActionResult Create(Student student)
     {
-        if(this.studentService.AddStudent(student))
+        if(this.studentService.AddStudent(student) > 0)
         {
             return CreatedAtAction($"/api/student/{student.Id}", student);
         }
@@ -56,6 +61,7 @@ public class StudentController : ControllerBase
     }
     
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin,Student")]
     public IActionResult Update(int id, [FromBody] Student student)
     {
         if (id != student.Id)
@@ -69,6 +75,7 @@ public class StudentController : ControllerBase
     }
     
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Delete(int id)
     {   
         if (this.studentService.DeleteStudent(id)) return NoContent();
@@ -77,6 +84,7 @@ public class StudentController : ControllerBase
     }
     
     [HttpPatch("{id:int}/UpdateName")]
+    [Authorize(Roles = "Admin,Student")]
     public IActionResult UpdateName(int id, [FromBody] string newName)
     { 
         Student student = context.Students.Find(id);

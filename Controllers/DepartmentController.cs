@@ -1,12 +1,14 @@
 using Lab1.Filters;
 using Lab1.Models;
 using Lab1.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class DepartmentController : ControllerBase
     {
         private readonly DepartmentService departmentService;
@@ -52,7 +54,7 @@ namespace Lab1.Controllers
                 return BadRequest(ModelState);
             }
             
-            if(this.departmentService.AddDepartment(department))
+            if(this.departmentService.AddDepartment(department) > 0)
             {
                 return CreatedAtAction(nameof(GetById), new {department.Id}, department);
             }
@@ -68,7 +70,7 @@ namespace Lab1.Controllers
                 return BadRequest(ModelState);
             }
             
-            if(this.departmentService.AddDepartment(department))
+            if(this.departmentService.AddDepartment(department) > 0)
             {
                 return CreatedAtAction(nameof(GetById), new {department.Id}, department);
             }

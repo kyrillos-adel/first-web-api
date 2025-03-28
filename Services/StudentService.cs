@@ -157,7 +157,7 @@ public class StudentService
         return studentDto;
     }
     
-    public bool AddStudent(Student student)
+    public int AddStudent(Student student)
     {
         return repository.Add(student);
     }

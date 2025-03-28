@@ -29,10 +29,12 @@ public class Repository <T> where T : class, IType
         return dbSet.FirstOrDefault(d => d.Name == name);
     }
     
-    public bool Add(T t)
+    public int Add(T t)
     {
         dbSet.Add(t);
-        return sdContext.SaveChanges() > 0;
+        sdContext.SaveChanges();
+
+        return t.Id;
     }
     
     public bool Update(T t)

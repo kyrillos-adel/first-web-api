@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 namespace Lab1.Models;
 
-public class SDbContext : DbContext
+public class SDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<Student> Students { get; set; }
     public DbSet<Department> Departments { get; set; }
