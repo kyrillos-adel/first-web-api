@@ -36,6 +36,7 @@ public class AuthService
         
         var user = new ApplicationUser
         {
+            StudentId = newStudentId,
             UserName = model.Username,
             Email = model.Email,
             Name = $"{model.FirstName} {model.LastName}",
@@ -103,6 +104,7 @@ public class AuthService
 
         var claims = new[]
         {
+            new Claim("StudentId", user.StudentId.ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),

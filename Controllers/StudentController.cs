@@ -1,4 +1,5 @@
-﻿using Lab1.Models;
+﻿using Lab1.Filters;
+using Lab1.Models;
 using Lab1.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,14 @@ public class StudentController : ControllerBase
 
     [HttpGet("{id:int}")]
     [Authorize(Roles = "Student")]
+    [ValidateUserFilter]
     public IActionResult GetById(int id)
     {
+        // if (User.FindFirst("StudentId")?.Value != id.ToString())
+        // {
+        //     return Unauthorized();
+        // }
+        
         var student = this.studentService.GetStudentById(id);
         
         if (student == null)

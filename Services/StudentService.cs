@@ -127,8 +127,8 @@ public class StudentService
         var studentDto = new StudentDto
         {
             Name = student.Name,
-            Address = student.Address,
-            DepartmentName = student.Department.Name,
+            Address = student.Address??"",
+            DepartmentName = student.Department?.Name??"",
             Skills = new List<string>()
             {
                 "C#",
